@@ -82,7 +82,7 @@ public class CekNomorGanjilGenapFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(285, 285, 285))))
         );
@@ -117,23 +117,44 @@ public class CekNomorGanjilGenapFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             int angka = Integer.parseInt(txtInputAngka.getText());
+            String hasil;
+            
             if (angka % 2 == 0) {
-                jLabel2.setText("Angka " + angka + " adalah Genap");
+                hasil = ("Angka " + angka + " adalah Genap");
             } else {
-                jLabel2.setText("Angka " + angka + " adalah Ganjil");
+                hasil = ("Angka " + angka + " adalah Ganjil");
             }
+            
+            if (bilanganPrima(angka)) {
+                hasil += "\nAngka " + angka + " adalah Bilangan Prima";
+            } else {
+                hasil += "\nAngka " + angka + " bukan Bilangan Prima";
+            }
+            
+            JOptionPane.showMessageDialog(this, hasil, "Hasil", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Harap masukkan angka yang valid.", "Error", JOptionPane.ERROR_MESSAGE);
+          //Untuk menampilkan pesan error dengan menggunakan JOptionPane
+            JOptionPane.showMessageDialog(this, "Harap masukkan angka yang valid/sesuai.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private boolean bilanganPrima(int nomor) {
+        if (nomor <= 1) return false; //Angka 0 dan 1 Bukan Bilangan prima.
+        for (int i = 2; i <= Math.sqrt(nomor); i++) {
+            if (nomor % i == 0) {
+                return false; //Jika ada pembagi, berarti bukan bilangan prima
+            }
+        }
+        return true;
+    }
+    
     private void txtInputAngkaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInputAngkaKeyTyped
         char c = evt.getKeyChar();
         if (!Character.isDigit(c)) { // Jika karakter bukan angka
             evt.consume(); // Mengabaikan karakter non-angka
         }
     }//GEN-LAST:event_txtInputAngkaKeyTyped
-
+    
     private void txtInputAngkaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtInputAngkaFocusGained
         txtInputAngka.setText("");
     }//GEN-LAST:event_txtInputAngkaFocusGained
